@@ -1,3 +1,5 @@
-export default function Home() {
-  return <>hello world </>;
+import Home from '@/sections/home';
+
+export default function HomePage() {
+  return <Home />;
 }
