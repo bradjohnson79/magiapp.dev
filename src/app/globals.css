@@ -12,6 +12,7 @@
   /* Neutral surfaces */
   --color-surface-soft: #fafafa;
   --color-surface-muted: #e6e6e8;
+  --color-surface-darker: #6b6b6e;
 
   /* Soft magic tones (backgrounds / glows) */
   --color-soft-violet: #c7b8ff;
