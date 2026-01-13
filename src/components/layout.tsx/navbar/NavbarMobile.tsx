@@ -17,7 +17,7 @@ export function NavbarMobile() {
   };
   return (
     <>
-      <header className='sticky top-0 z-50 w-full bg-transparent md:hidden'>
+      <header className='relative z-50 w-full bg-transparent md:hidden'>
         <div className='mx-auto flex max-w-7xl items-center justify-between border-b border-(--color-surface-muted) px-4 py-3'>
           <div className='flex items-center gap-2'>
             <Image

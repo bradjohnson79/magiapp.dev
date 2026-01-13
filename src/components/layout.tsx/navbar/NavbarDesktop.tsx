@@ -6,7 +6,7 @@ import { NavLink } from '@/components/ui/NavLink';
 
 export function NavbarDesktop() {
   return (
-    <header className='sticky top-0 z-50 hidden w-full bg-transparent md:block'>
+    <header className='relative hidden w-full bg-transparent md:block'>
       <div className='border-b border-(--color-surface-muted)'>
         <div className='mx-auto flex max-w-7xl items-center justify-between px-6 py-4'>
           <div className='flex items-center'>
