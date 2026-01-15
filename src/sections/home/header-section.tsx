@@ -70,27 +70,17 @@ export function HeaderSection() {
             className='text-3xl font-bold leading-tight lg:text-6xl'
           >
             Build Apps That Actually{' '}
-            <span className='relative inline-block text-(--color-magic-blue)'>
+            <span
+              className='relative inline-block text-(--color-magic-blue)'
+              style={{
+                textShadow: `
+        0 0 0.75px var(--color-background),
+        0 0 1.5px var(--color-background),
+        0 0 3px var(--color-background)
+      `,
+              }}
+            >
               Think
-              <motion.div
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 0.5,
-                  ease: [0.22, 1, 0.36, 1],
-                  delay: 0.25,
-                }}
-                className='pointer-events-none absolute top-0'
-              >
-                <Image
-                  src='/images/ui-shapes/square-dashed.svg'
-                  alt=''
-                  aria-hidden
-                  width={250}
-                  height={250}
-                  className='h-auto'
-                />
-              </motion.div>
             </span>
           </motion.h1>
           <motion.p
