@@ -152,3 +152,187 @@ export const magiPillars = [
     },
   },
 ];
+
+// how-it-works.data.ts
+export type HowItWorksStep = {
+  id: number;
+  side: 'left' | 'right';
+  title: string;
+  description: string;
+  cardPadding: { desktop: 'pr' | 'pl'; mobile: 'pb' };
+  cardImg: {
+    src: string;
+    w: number;
+    h: number;
+    desktopOverlapClass: string;
+  };
+  decoNumberImg: {
+    src: string;
+    w: number;
+    h: number;
+    desktopPosClass: string;
+  };
+  arrowRotationClass: string;
+};
+
+export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
+  {
+    id: 1,
+    side: 'left',
+    title: 'Describe what you want to build',
+    description:
+      'Explain your idea in plain language or technical terms — MAGI understands both.',
+    cardPadding: { desktop: 'pr', mobile: 'pb' },
+    cardImg: {
+      src: '/images/home/forth-section-one.png',
+      w: 300,
+      h: 200,
+      desktopOverlapClass: '-ml-18',
+    },
+    decoNumberImg: {
+      src: '/images/home/forth-section-two.png',
+      w: 142,
+      h: 128,
+      desktopPosClass: 'absolute -top-8 right-[12%] hidden lg:block',
+    },
+    arrowRotationClass: '-rotate-24',
+  },
+  {
+    id: 2,
+    side: 'right',
+    title: 'MAGI designs the system',
+    description:
+      'Architecture, logic, and structure are assembled intelligently, not guessed.',
+    cardPadding: { desktop: 'pl', mobile: 'pb' },
+    cardImg: {
+      src: '/images/home/forth-section-three.png',
+      w: 300,
+      h: 200,
+      desktopOverlapClass: '-mr-18',
+    },
+    decoNumberImg: {
+      src: '/images/home/forth-section-fore.png',
+      w: 142,
+      h: 128,
+      desktopPosClass: 'absolute -bottom-8 left-[12%] hidden lg:block',
+    },
+    arrowRotationClass: 'rotate-24',
+  },
+  {
+    id: 3,
+    side: 'left',
+    title: 'Refine, expand, and deploy',
+    description:
+      'You stay in control. MAGI helps you move faster with fewer mistakes.',
+    cardPadding: { desktop: 'pr', mobile: 'pb' },
+    cardImg: {
+      src: '/images/home/forth-section-six.png',
+      w: 300,
+      h: 200,
+      desktopOverlapClass: '-ml-18',
+    },
+    decoNumberImg: {
+      src: '/images/home/forth-section-seven.png',
+      w: 142,
+      h: 128,
+      desktopPosClass: 'absolute top-10 right-[12%] hidden lg:block',
+    },
+    arrowRotationClass: '-rotate-24',
+  },
+  {
+    id: 4,
+    side: 'right',
+    title: 'Publish and get paid',
+    description:
+      'Finalize your app, set up publishing, and go live when you’re ready.',
+    cardPadding: { desktop: 'pl', mobile: 'pb' },
+    cardImg: {
+      src: '/images/home/forth-section-heigh.png',
+      w: 300,
+      h: 200,
+      desktopOverlapClass: '-mr-18',
+    },
+    decoNumberImg: {
+      src: '/images/home/forth-section-nine.png',
+      w: 142,
+      h: 128,
+      desktopPosClass: 'absolute -top-12 left-[12%] hidden lg:block',
+    },
+    arrowRotationClass: 'rotate-24',
+  },
+  {
+    id: 5,
+    side: 'left',
+    title: 'What you create is yours to keep',
+    description:
+      'No lock-in restrictions. No prompt limits. Make your vision come to life, and you own all of it.',
+    cardPadding: { desktop: 'pr', mobile: 'pb' },
+    cardImg: {
+      src: '/images/home/forth-section-ten.png',
+      w: 300,
+      h: 200,
+      desktopOverlapClass: '-ml-18',
+    },
+    decoNumberImg: {
+      src: '/images/home/forth-section-eleven.png',
+      w: 142,
+      h: 128,
+      desktopPosClass: 'absolute -bottom-12 right-[12%] hidden lg:block',
+    },
+    arrowRotationClass: '-rotate-24',
+  },
+];
+
+type PlanTeaserCard = {
+  id: 'trial' | 'monthly' | 'annual';
+  title: string;
+  description: string;
+  imageSrc: string;
+  imageW: number;
+  imageH: number;
+  desktopJustify: 'start' | 'center' | 'end';
+  desktopOffsetClass?: string;
+};
+
+export const PLAN_TEASER_CARDS: PlanTeaserCard[] = [
+  {
+    id: 'trial',
+    title: 'MAGI Trial',
+    description:
+      'No token restrictions. No prompt limits. Make your vision come to life, and you own all of it.',
+    imageSrc: '/images/home/five-section-grid-one.png',
+    imageW: 380,
+    imageH: 300,
+    desktopJustify: 'start',
+  },
+  {
+    id: 'monthly',
+    title: 'MAGI Monthly',
+    description: 'Full access for independent builders and creators.',
+    imageSrc: '/images/home/five-section-grid-two.png',
+    imageW: 380,
+    imageH: 300,
+    desktopJustify: 'center',
+  },
+  {
+    id: 'annual',
+    title: 'MAGI Annual',
+    description: 'Best value for long-term builders and serious projects.',
+    imageSrc: '/images/home/five-section-grid-three.png',
+    imageW: 380,
+    imageH: 300,
+    desktopJustify: 'end',
+  },
+];
+
+type DocsSupportPoint = {
+  id: number;
+  text: string;
+};
+
+export const DOCS_SUPPORT_POINTS: DocsSupportPoint[] = [
+  { id: 1, text: 'Getting started guides' },
+  { id: 2, text: 'Core concepts explained simply' },
+  { id: 3, text: 'Troubleshooting and common fixes' },
+  { id: 4, text: 'Best practices as MAGI evolves' },
+];
