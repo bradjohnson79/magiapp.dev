@@ -27,7 +27,10 @@ export function WhyMagi() {
             viewport={{ once: true, amount: 0.25 }}
             className='px-2'
           >
-            <motion.p variants={fadeUp} className='text-xl font-semibold'>
+            <motion.p
+              variants={fadeUp}
+              className='text-lg lg:text-xl font-semibold'
+            >
               MAGI thinks in systems — not fragments.
             </motion.p>
 
@@ -87,7 +90,7 @@ export function WhyMagi() {
               whileInView='show'
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className='relative mx-auto w-full max-w-[900px] px-4 flex justify-center'
+              className='relative mx-auto w-full max-w-[900px] px-4 hidden lg:flex justify-center'
             >
               <Image
                 src='/images/home/third-section-one.png'
