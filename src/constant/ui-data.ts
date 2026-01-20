@@ -100,6 +100,17 @@ export const whyMagiPoints = [
   },
 ];
 
+export const downloadMagi = [
+  {
+    key: 'compatible',
+    text: 'Compatible with modern systems.',
+  },
+  {
+    key: 'fast',
+    text: 'Fast install. No configuration maze.',
+  },
+];
+
 export const magiPillars = [
   {
     key: 'self-learning',
@@ -335,4 +346,19 @@ export const DOCS_SUPPORT_POINTS: DocsSupportPoint[] = [
   { id: 2, text: 'Core concepts explained simply' },
   { id: 3, text: 'Troubleshooting and common fixes' },
   { id: 4, text: 'Best practices as MAGI evolves' },
+];
+
+export const WHAT_YOU_CAN_DO_SECTION: DocsSupportPoint[] = [
+  { id: 1, text: 'Design and explore full app architectures' },
+  { id: 2, text: 'Build and iterate on real projects' },
+  { id: 3, text: 'Test workflows, logic, and system behavior' },
+  { id: 4, text: 'Explore dashboards, features, and tooling' },
+  { id: 5, text: 'Understand how MAGI thinks and evolves with your input' },
+];
+
+
+export const WHAT_LIMIT: DocsSupportPoint[] = [
+  { id: 1, text: 'Projects cannot be published' },
+  { id: 2, text: 'Nothing goes live' },
+  { id: 3, text: 'No deployment actions are allowed' },
 ];

@@ -93,3 +93,13 @@ export const STEP_NUMBER_PARALLAX = {
   fromY: -10,
   toY: 18,
 };
+
+export const imageRevealV: Variants = {
+  hidden: { opacity: 0, y: 14, scale: 0.985 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.55, ease: cubicBezier(0.16, 1, 0.3, 1) },
+  },
+};
