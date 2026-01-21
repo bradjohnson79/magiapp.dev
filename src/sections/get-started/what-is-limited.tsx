@@ -10,17 +10,17 @@ export function WhatIsLimitedSection() {
 
     const circle = useTransform(scrollY, [0, 900], [0, 90]);
     return (
-        <section className="relative  py-12 px-4 text-(--color-foreground) lg:px-6 overflow-x-hidden">
+        <section className="relative py-12 lg:py-24 px-4 text-(--color-foreground) lg:px-6 overflow-x-hidden overflow-y-hidden">
             <motion.div
                 style={{ y: circle }}
-                className="absolute -right-120 bottom-0 md:-right-120 lg:-right-92 z-0"
+                className="absolute -right-120 bottom-32 md:-right-120 lg:-right-100 z-0"
             >
                 <Image
                     src="/images/ui-shapes/mixed-linear.svg"
                     alt=""
                     aria-hidden
-                    width={700}
-                    height={700}
+                    width={900}
+                    height={900}
                     priority
                     className="object-contain"
                 />

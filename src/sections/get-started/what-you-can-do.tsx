@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export function WhatYouCanDo() {
     return (
-        <section className="py-12  text-(--color-foreground)">
+        <section className="py-12 lg:py-0 lg:pt-24  text-(--color-foreground)">
             <div className="mx-auto max-w-4xl">
                 <h1
                     className="text-3xl font-bold leading-tight lg:text-6xl mb-4 lg:mx-0 mx-6 text-start lg:text-center">
