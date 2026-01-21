@@ -33,6 +33,14 @@ export function DownloadMAGISection() {
                     >
                         Start your free 3-day trial today.
                     </motion.p>
+                    <motion.div variants={fadeUp} className="mt-12">
+                        <Button
+                            label="Download MAGI"
+                            href="#"
+                            rightIcon={<Icon icon="meteor-icons:download" className='text-(--color-background)' width="18" height="18" />}
+                            className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-(--color-foreground) bg-(--color-foreground) px-6 text-sm font-semibold text-(--color-background) shadow-sm transition-all duration-300 hover:bg-[color-mix(in_oklab,var(--color-foreground)_85%,white)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20"
+                        />
+                    </motion.div>
                     <motion.div
                         variants={fadeUp}
                         className="mt-8 flex flex-col gap-4 text-(--color-surface-darker) font-normal text-lg"
@@ -47,14 +55,6 @@ export function DownloadMAGISection() {
                                 <p>{item.text}</p>
                             </div>
                         ))}
-                    </motion.div>
-                    <motion.div variants={fadeUp} className="mt-12">
-                        <Button
-                            label="Download MAGI"
-                            href="#"
-                            rightIcon={<Icon icon="meteor-icons:download" className='text-(--color-background)' width="18" height="18" />}
-                            className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-(--color-foreground) bg-(--color-foreground) px-6 text-sm font-semibold text-(--color-background) shadow-sm transition-all duration-300 hover:bg-[color-mix(in_oklab,var(--color-foreground)_85%,white)] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20"
-                        />
                     </motion.div>
                 </motion.div>
                 <div

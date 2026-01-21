@@ -14,7 +14,7 @@ export function HeaderSection() {
   const circleTwoY = useTransform(scrollY, [0, 900], [0, -90]);
 
   return (
-    <LandingHeaderShell className="min-h-screen">
+    <LandingHeaderShell className="min-h-screen overflow-x-hidden">
       <motion.div
         style={{ y: circleOneY }}
         className="absolute -right-98 -top-12 md:-right-64 lg:-right-52 z-0"
