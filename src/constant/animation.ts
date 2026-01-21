@@ -103,3 +103,13 @@ export const imageRevealV: Variants = {
     transition: { duration: 0.55, ease: cubicBezier(0.16, 1, 0.3, 1) },
   },
 };
+
+export const stepsGridV: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+    },
+  },
+};

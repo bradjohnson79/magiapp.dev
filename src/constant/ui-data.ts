@@ -102,13 +102,43 @@ export const whyMagiPoints = [
 
 export const downloadMagi = [
   {
-    key: 'compatible',
-    text: 'Compatible with modern systems.',
+    key: 'fast',
+    text: 'Fast install.',
   },
   {
-    key: 'fast',
-    text: 'Fast install. No configuration maze.',
+    key: 'no',
+    text: 'No setup maze.',
   },
+  {
+    key: 'you',
+    text: 'You can be building within minutes.',
+  },
+];
+
+export const unlockMagi = [
+  {
+    key: 'publishing',
+    text: 'Publishing & deployment',
+  },
+  {
+    key: 'continued',
+    text: 'Continued access to all MAGI features',
+  },
+  {
+    key: 'ongoing',
+    text: 'Ongoing updates and improvements',
+  },
+];
+
+export const oneLastThing = [
+  {
+    key: 'it',
+    text: 'It is here to Work with it',
+  },
+  {
+    key: 'if',
+    text: 'If you care about building real systems — not patchwork apps — you’re in the right place.',
+  }
 ];
 
 export const magiPillars = [
@@ -361,4 +391,47 @@ export const WHAT_LIMIT: DocsSupportPoint[] = [
   { id: 1, text: 'Projects cannot be published' },
   { id: 2, text: 'Nothing goes live' },
   { id: 3, text: 'No deployment actions are allowed' },
+];
+
+
+export const TRIAL_DAYS_WORKS = [
+  {
+    id: 'step-1',
+    number: 1,
+    image: {
+      src: '/images/ui-shapes/number-one-blue.svg',
+      width: 90,
+      height: 90,
+      alt: 'Step one',
+      className: 'absolute -top-6 -right-3',
+    },
+    title: 'Download MAGI',
+    description: 'Install and start using it immediately.',
+  },
+  {
+    id: 'step-2',
+    number: 2,
+    image: {
+      src: '/images/ui-shapes/number-two-blue.svg',
+      width: 90,
+      height: 90,
+      alt: 'Step two',
+      className: 'absolute -bottom-12 right-18',
+    },
+    title: 'Explore freely for 3 days',
+    description: 'No feature restrictions. No pressure.',
+  },
+  {
+    id: 'step-3',
+    number: 3,
+    image: {
+      src: '/images/ui-shapes/number-three-blue.svg',
+      width: 90,
+      height: 90,
+      alt: 'Step three',
+      className: 'absolute -top-14 -right-3',
+    },
+    title: 'Decide when you are ready',
+    description: 'Upgrade to unlock publishing and continue building.',
+  },
 ];
