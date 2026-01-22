@@ -2,6 +2,8 @@ type ButtonProps = {
   label: string;
   href?: string;
   onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
   className?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -11,6 +13,8 @@ export function Button({
   label,
   href,
   onClick,
+  type = 'button',
+  disabled,
   className = '',
   leftIcon,
   rightIcon,
@@ -32,7 +36,7 @@ export function Button({
   }
 
   return (
-    <button type='button' onClick={onClick} className={className}>
+    <button type={type} onClick={onClick} disabled={disabled} className={className}>
       {content}
     </button>
   );
