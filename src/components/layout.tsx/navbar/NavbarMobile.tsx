@@ -32,6 +32,7 @@ export function NavbarMobile() {
 
           <div className='flex items-center gap-2'>
             <Button
+              href='/get-started'
               label='Get Started'
               className='relative inline-flex items-center justify-center overflow-hidden rounded bg-(--color-foreground) px-3 py-2 text-xs font-semibold text-(--color-background) transition-all duration-300 hover:shadow-[0_0_0_6px_color-mix(in_oklab,var(--color-foreground)_5%,transparent)]'
             />
@@ -129,6 +130,7 @@ export function NavbarMobile() {
                 })}
                 <div className='mt-8'>
                   <Button
+                    href='/login'
                     label='Log in'
                     className='w-full rounded-lg border border-(--color-surface-muted) bg-(--color-surface-soft) px-4 py-3 text-sm font-medium text-(--color-foreground) transition-colors hover:bg-(--color-surface-muted)'
                   />

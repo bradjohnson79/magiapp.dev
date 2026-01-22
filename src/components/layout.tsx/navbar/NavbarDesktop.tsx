@@ -60,10 +60,12 @@ export function NavbarDesktop() {
           {/* Right: Buttons */}
           <div className='flex items-center gap-3'>
             <Button
+              href='/login'
               label='Log in'
               className='rounded border border-(--color-surface-muted) bg-(--color-surface-soft) px-4 py-2 text-xs font-semibold text-(--color-foreground) cursor-pointer transition-colors hover:bg-(--color-surface-muted)'
             />
             <Button
+              href='/get-started'
               label='Get Started'
               className='relative inline-flex items-center cursor-pointer border justify-center overflow-hidden rounded bg-(--color-foreground) px-4 py-2 text-xs font-semibold text-(--color-background) transition-all duration-300'
             />
