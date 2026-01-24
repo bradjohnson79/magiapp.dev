@@ -13,10 +13,14 @@ import { RHFTextField } from '@/components/hook-form/RHFTextField';
 import { signUpSchema, type SignUpValues } from '@/validation/auth';
 import { useRouter } from 'next/navigation';
 import { useSignUp } from '@clerk/nextjs';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 export function SignUpPageContent() {
     const router = useRouter();
     const { signUp, isLoaded } = useSignUp();
+    const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+
 
     const methods = useForm<SignUpValues>({
         resolver: zodResolver(signUpSchema),
@@ -31,6 +35,26 @@ export function SignUpPageContent() {
     const { handleSubmit, formState } = methods;
     const { isSubmitting } = formState;
 
+    const isBusy = isSubmitting || isGoogleLoading;
+
+    const onGoogle = async () => {
+        if (!isLoaded || isBusy) return;
+
+        setIsGoogleLoading(true);
+        try {
+            await signUp.authenticateWithRedirect({
+                strategy: 'oauth_google',
+                redirectUrl: '/sso-callback',
+                redirectUrlComplete: '/dashboard',
+            });
+            // NOTE: redirect happens, so no need to set loading false here usually.
+        } catch (err) {
+            console.error('CLERK GOOGLE SIGNUP ERROR', err);
+            setIsGoogleLoading(false);
+        }
+    };
+
+
     const onSubmit = handleSubmit(async (data) => {
         if (!isLoaded) return;
 
@@ -44,8 +68,61 @@ export function SignUpPageContent() {
                 strategy: 'email_code',
             });
 
+            toast.success('Check your email 📩', {
+                description: 'We sent you a verification code.',
+            });
+
             router.push('/verify-email');
-        } catch (err) {
+        } catch (err: unknown) {
+            // 🔐 Clerk structured errors
+            if (
+                typeof err === 'object' &&
+                err !== null &&
+                'errors' in err &&
+                Array.isArray((err).errors)
+            ) {
+                const clerkError = (err).errors[0];
+                const code = clerkError.code as string | undefined;
+
+                switch (code) {
+                    case 'form_identifier_exists':
+                        toast.error('Email already in use', {
+                            description: 'Try logging in instead.',
+                        });
+                        return;
+
+                    case 'form_invalid_email_address':
+                        toast.error('Invalid email', {
+                            description: clerkError.message,
+                        });
+                        return;
+
+                    case 'captcha_missing_token':
+                    case 'captcha_invalid':
+                        toast.error('Security check failed', {
+                            description: 'Please refresh the page and try again.',
+                        });
+                        return;
+
+                    case 'rate_limit_exceeded':
+                        toast.error('Too many attempts', {
+                            description: 'Please wait a moment and try again.',
+                        });
+                        return;
+
+                    default:
+                        toast.error('Sign up failed', {
+                            description: clerkError.message ?? 'Something went wrong.',
+                        });
+                        return;
+                }
+            }
+
+            // 🔥 Fallback (unexpected error)
+            toast.error('Sign up failed', {
+                description: 'Unexpected error. Please try again.',
+            });
+
             console.error('CLERK SIGNUP ERROR', err);
         }
     });
@@ -53,16 +130,25 @@ export function SignUpPageContent() {
     return (
         <div className="flex flex-col gap-4">
             <div className="flex justify-start">
-                <Image src="/images/magi-logo.png" alt="MAGI" width={83} height={83} priority className="h-auto w-[83px]" />
+                <Image src="/images/magi-logo.png" alt="MAGI" width={83} height={83} priority className="h-auto w-20.75" />
             </div>
 
             <div className="flex flex-col items-start gap-3">
                 <p className="max-w-xl text-xl font-bold lg:text-2xl">Create your account</p>
 
                 <Button
-                    leftIcon={<Icon icon="ant-design:google-outlined" width={18} height={18} />}
-                    label="Continue With Google"
-                    className="flex w-full cursor-pointer items-center justify-center rounded border border-(--color-surface-muted) bg-(--color-surface-soft) px-4 py-2 text-xs font-semibold text-(--color-foreground) transition-colors hover:bg-(--color-surface-muted)"
+                    type="button"
+                    onClick={onGoogle}
+                    disabled={isBusy}
+                    leftIcon={
+                        isGoogleLoading ? (
+                            <Icon icon="line-md:loading-twotone-loop" width={18} height={18} />
+                        ) : (
+                            <Icon icon="ant-design:google-outlined" width={18} height={18} />
+                        )
+                    }
+                    label={isGoogleLoading ? 'Connecting...' : 'Continue With Google'}
+                    className="flex w-full cursor-pointer items-center justify-center rounded border border-(--color-surface-muted) bg-(--color-surface-soft) px-4 py-2 text-xs font-semibold text-(--color-foreground) transition-colors hover:bg-(--color-surface-muted) disabled:cursor-not-allowed disabled:opacity-60"
                 />
             </div>
 
@@ -72,7 +158,7 @@ export function SignUpPageContent() {
                 <RHFTextField name="fullName" label="Full name" placeholder="Full name" autoComplete="name" />
                 <RHFTextField name="email" label="Email" type="email" placeholder="Email" autoComplete="email" />
                 <RHFTextField name="password" label="Password" type="password" placeholder="Password" autoComplete="new-password" />
-
+                <div id="clerk-captcha" />
                 <Button
                     type="submit"
                     disabled={isSubmitting}

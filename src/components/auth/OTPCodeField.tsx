@@ -34,6 +34,7 @@ function getErrorMessage(errors: FieldErrors, name: string): string | undefined 
     return undefined;
 }
 
+
 export function OtpCodeField({ name = 'code', length = 6 }: OtpFieldProps) {
     const { control, setValue, getValues, trigger, formState } = useFormContext();
 
@@ -44,6 +45,24 @@ export function OtpCodeField({ name = 'code', length = 6 }: OtpFieldProps) {
 
     const setDigit = (i: number, v: string) => {
         setValue(`${name}.${i}`, v, { shouldDirty: true, shouldTouch: true, shouldValidate: true });
+    };
+
+    const fillFrom = (startIndex: number, raw: string) => {
+        const digits = raw.replace(/\D/g, '');
+        if (!digits) return;
+
+        const room = length - startIndex;
+        const sliced = digits.slice(0, room);
+
+        for (let k = 0; k < sliced.length; k++) {
+            setDigit(startIndex + k, sliced[k] ?? '');
+        }
+
+        // focus next empty or last filled
+        const nextFocus = Math.min(startIndex + sliced.length, length - 1);
+        focusAt(nextFocus);
+
+        void trigger(name);
     };
 
     const onKeyDownAt = (i: number, e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -78,15 +97,27 @@ export function OtpCodeField({ name = 'code', length = 6 }: OtpFieldProps) {
                                 }}
                                 value={(field.value ?? '') as string}
                                 onChange={(e) => {
-                                    const next = e.target.value.replace(/\D/g, '').slice(0, 1);
+                                    const raw = e.target.value;
 
+                                    // if user pastes/inputs multiple digits (mobile keyboards sometimes do this)
+                                    if (raw.length > 1) {
+                                        fillFrom(i, raw);
+                                        return;
+                                    }
+
+                                    const next = raw.replace(/\D/g, '').slice(0, 1);
                                     field.onChange(next);
-                                    if (next && i < length - 1) focusAt(i + 1);
 
+                                    if (next && i < length - 1) focusAt(i + 1);
                                     void trigger(name);
                                 }}
                                 onBlur={field.onBlur}
                                 onKeyDown={(e) => onKeyDownAt(i, e)}
+                                onPaste={(e: React.ClipboardEvent<HTMLInputElement>) => {
+                                    e.preventDefault();
+                                    const text = e.clipboardData.getData('text');
+                                    fillFrom(i, text);
+                                }}
                                 inputMode="numeric"
                                 autoComplete={i === 0 ? 'one-time-code' : 'off'}
                                 maxLength={1}

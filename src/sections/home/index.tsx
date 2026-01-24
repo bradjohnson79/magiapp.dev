@@ -1,4 +1,3 @@
-import { Footer } from '@/components/layout.tsx/footer';
 import { AIChatSupportSection } from './ai-chat-support';
 import { DocsAndSupportSection } from './docs-and-support';
 import { FinalCTASection } from './final-cta';
@@ -19,7 +18,6 @@ export default function Home() {
       <DocsAndSupportSection />
       <AIChatSupportSection />
       <FinalCTASection />
-      <Footer />
     </>
   );
 }
