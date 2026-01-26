@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import ImagePanel from './_component/ImagePanel';
 
 export const metadata: Metadata = {
     title: 'MAGI | Authentication',
@@ -17,8 +18,8 @@ export default function AuthLayout({
                     <div className='w-full max-w-sm'>{children}</div>
                 </div>
 
-                <div className='hidden lg:flex items-center justify-center p-3'>
-                    <div className='h-full w-full rounded-lg bg-(--color-surface-soft) border border-(--color-surface-muted)' />
+                <div className="relative h-full w-full overflow-hidden rounded-lg border border-(--color-surface-muted) hidden lg:block">
+                    <ImagePanel />
                 </div>
             </div>
         </main>
