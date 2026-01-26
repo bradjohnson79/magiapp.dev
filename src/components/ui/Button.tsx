@@ -7,6 +7,7 @@ type ButtonProps = {
   className?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export function Button({
@@ -18,12 +19,13 @@ export function Button({
   className = '',
   leftIcon,
   rightIcon,
+  children,
 }: ButtonProps) {
-  const content = (
+  const content = children ?? (
     <>
-      {leftIcon && <span className='mr-2 inline-flex'>{leftIcon}</span>}
+      {leftIcon ? <span className="mr-2 inline-flex">{leftIcon}</span> : null}
       {label}
-      {rightIcon && <span className='ml-2 inline-flex'>{rightIcon}</span>}
+      {rightIcon ? <span className="ml-2 inline-flex">{rightIcon}</span> : null}
     </>
   );
 
