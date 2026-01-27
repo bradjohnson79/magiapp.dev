@@ -59,9 +59,16 @@ export function SignUpPageContent() {
         if (!isLoaded) return;
 
         try {
+            const fullName = data.fullName?.trim();
+            const parts = fullName ? fullName.split(/\s+/).filter(Boolean) : [];
+            const firstName = parts[0] ?? undefined;
+            const lastName = parts.length > 1 ? parts.slice(1).join(' ') : undefined;
+
             await signUp.create({
                 emailAddress: data.email,
                 password: data.password,
+                firstName,
+                lastName,
             });
 
             await signUp.prepareEmailAddressVerification({
@@ -74,7 +81,6 @@ export function SignUpPageContent() {
 
             router.push('/verify-email');
         } catch (err: unknown) {
-            // 🔐 Clerk structured errors
             if (
                 typeof err === 'object' &&
                 err !== null &&
