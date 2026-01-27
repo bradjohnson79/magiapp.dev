@@ -1,6 +1,6 @@
+import { NavItem } from "@/constant/layout";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import { NavItem } from ".";
 
 
 export function SidebarNavItem({ item, active, collapsed }: { item: NavItem; active: boolean; collapsed: boolean }) {

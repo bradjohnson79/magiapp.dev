@@ -2,26 +2,19 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { useClerk } from '@clerk/nextjs';
+import { useClerk, useUser } from '@clerk/nextjs';
 import { SidebarBrand } from './SidebarBrand';
 import { SidebarProfileMenu } from './SidebarProfileMenu';
 import { SidebarNavItem } from './SidebarNavItem';
+import { sideNav } from '@/constant/layout';
 
-export type NavItem = {
-    label: string;
-    href: string;
-    icon: string;
-};
 
-const NAV: NavItem[] = [
-    { label: 'Home', href: '/dashboard', icon: 'solar:home-2-linear' },
-    { label: 'Search', href: '/dashboard/search', icon: 'ic:baseline-search' },
-];
 
 export function SidebarDesktop() {
     const pathname = usePathname();
     const router = useRouter();
     const { signOut } = useClerk();
+    const { user } = useUser();
     const [profileOpen, setProfileOpen] = useState(false);
     const [collapsed, setCollapsed] = useState(false);
     const profileRef = useRef<HTMLDivElement | null>(null);
@@ -55,18 +48,34 @@ export function SidebarDesktop() {
         }
     };
 
-    // later: replace with real user (Clerk)
-    const userName = 'Zighed';
-    const initial = userName?.trim()?.[0]?.toUpperCase() ?? 'U';
+    const isUserLoaded = !!user;
+
+    const userName = isUserLoaded
+        ? user?.fullName ||
+        user?.firstName ||
+        user?.username ||
+        user?.primaryEmailAddress?.emailAddress ||
+        'User'
+        : '';
+
+    const initial = isUserLoaded && userName
+        ? userName.trim()[0].toUpperCase()
+        : '';
+
+    const role =
+        (user?.publicMetadata?.role as string) === 'admin'
+            ? 'Admin'
+            : 'Member';
 
     return (
         <aside
             className={[
                 'sticky top-0 hidden h-screen shrink-0 border-r border-(--color-surface-muted) bg-(--color-background) lg:flex',
+                'bg-[url(/images/dashboard/sidebar-bg.png)] bg-cover bg-no-repeat bg-center',
                 collapsed ? 'w-16' : 'w-72',
             ].join(' ')}
         >
-            <div className="flex h-full w-full flex-col p-3">
+            <div className="flex h-full w-full flex-col p-3 z-10">
                 <SidebarBrand collapsed={collapsed} onClose={closeSidebar} onOpen={openSidebar} />
 
                 {/* Nav */}
@@ -75,9 +84,18 @@ export function SidebarDesktop() {
                         <p className="px-2 pb-2 text-xs font-semibold text-(--color-surface-darker)">Navigation</p>
                     ) : null}
                     <div className="flex flex-col gap-1">
-                        {NAV.map((item) => (
-                            <SidebarNavItem key={item.href} item={item} active={pathname === item.href} collapsed={collapsed} />
-                        ))}
+                        {sideNav
+                            .filter(
+                                (item) => !item.role || item.role === role.toLowerCase()
+                            )
+                            .map((item) => (
+                                <SidebarNavItem
+                                    key={item.href}
+                                    item={item}
+                                    active={pathname === item.href}
+                                    collapsed={collapsed}
+                                />
+                            ))}
                     </div>
                 </div>
 
@@ -85,12 +103,12 @@ export function SidebarDesktop() {
                 <div className="flex-1" />
 
                 <SidebarProfileMenu
+                    role={role}
                     collapsed={collapsed}
                     userName={userName}
                     initial={initial}
                     profileOpen={profileOpen}
                     onToggle={() => setProfileOpen((v) => !v)}
-                    onClose={() => setProfileOpen(false)}
                     onLogout={onLogout}
                     profileRef={profileRef}
                 />

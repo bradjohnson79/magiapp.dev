@@ -3,24 +3,23 @@
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 
 export function SidebarProfileMenu({
     collapsed,
     userName,
+    role,
     initial,
     profileOpen,
     onToggle,
-    onClose,
     onLogout,
     profileRef,
 }: {
     collapsed: boolean;
     userName: string;
+    role: string;
     initial: string;
     profileOpen: boolean;
     onToggle: () => void;
-    onClose: () => void;
     onLogout: () => void;
     profileRef: React.RefObject<HTMLDivElement | null>;
 }) {
@@ -51,18 +50,10 @@ export function SidebarProfileMenu({
                 >
                     <div className="px-2 py-1.5">
                         <p className="truncate text-xs font-semibold text-(--color-foreground)">{userName}</p>
-                        <p className="truncate text-[11px] text-(--color-surface-darker)">Account</p>
+                        <p className="truncate text-[11px] text-(--color-surface-darker)">{role}</p>
                     </div>
 
                     <div className="flex flex-col gap-1">
-                        <Link
-                            href="/profile"
-                            onClick={onClose}
-                            className="flex items-center gap-2 rounded-lg border border-transparent px-2.5 py-1.5 text-xs font-semibold text-(--color-foreground) transition-colors hover:bg-(--color-surface-soft) hover:border-(--color-surface-muted)"
-                        >
-                            <Icon icon="solar:user-linear" width={16} height={16} />
-                            Profile
-                        </Link>
 
                         <Button
                             type="button"

@@ -7,7 +7,7 @@ import { MobileOverlay } from './MobileOverlay';
 import { BottomSheet } from './BottomSheet';
 import { NavSheetContent } from './NavSheetContent';
 import { ProfileSheetContent } from './ProfileSheetContent';
-import { useClerk } from '@clerk/nextjs';
+import { useClerk, useUser } from '@clerk/nextjs';
 
 type SheetId = 'nav' | 'profile' | null;
 
@@ -19,17 +19,25 @@ export type NavLink = {
 };
 
 export const NAV_LINKS: NavLink[] = [
-    { label: 'Home', href: '/dashboard', icon: 'solar:home-2-linear', variant: 'soft' },
-    { label: 'Search', href: '/dashboard/search', icon: 'ic:baseline-search', variant: 'plain' },
+    { label: 'Home', href: '/dashboard', icon: 'solar:home-2-linear', variant: 'plain' },
+    { label: 'Profile', href: '/dashboard/profile', icon: 'ion:person-outline', variant: 'plain' },
+    { label: 'Tokens', href: '/dashboard/tokens', icon: 'material-symbols:token-outline-rounded', variant: 'plain' },
+    { label: 'Support', href: '/dashboard/support', icon: 'ix:support', variant: 'plain' },
+    { label: 'Settings', href: '/dashboard/settings', icon: 'ci:settings', variant: 'plain' },
 ];
 
 export function SideBarMobile() {
     const router = useRouter();
     const { signOut } = useClerk();
+    const { user } = useUser();
 
-    // later: replace with real Clerk user
-    const userName = 'Zighed';
-    const initial = userName?.trim()?.[0]?.toUpperCase() ?? 'U';
+    const userName = user?.fullName || user?.firstName || user?.username || user?.primaryEmailAddress?.emailAddress || 'User';
+    const initial = (userName?.trim()?.[0] || 'U').toUpperCase();
+
+    const role =
+        (user?.publicMetadata?.role as string) === 'admin'
+            ? 'Admin'
+            : 'Member';
 
     const [openSheet, setOpenSheet] = useState<SheetId>(null);
 
@@ -70,7 +78,7 @@ export function SideBarMobile() {
 
             <div ref={profilePanelRef}>
                 <BottomSheet open={profileOpen} onClose={closeAll} ariaLabel="profile-sheet">
-                    <ProfileSheetContent userName={userName} initial={initial} onClose={closeAll} onLogout={onLogout} />
+                    <ProfileSheetContent userName={userName} role={role} initial={initial} onClose={closeAll} onLogout={onLogout} />
                 </BottomSheet>
             </div>
         </>
