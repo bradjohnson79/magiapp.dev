@@ -3,9 +3,14 @@ import { NextResponse } from 'next/server';
 
 const isDashboardRoute = createRouteMatcher(['/dashboard(.*)']);
 const isAuthRoute = createRouteMatcher(['/login(.*)', '/sign-up(.*)', '/verify-2fa(.*)', '/verify-email(.*)']);
+const isAdminRoute = createRouteMatcher([
+    '/dashboard/docs(.*)',
+    '/dashboard/tool(.*)',
+]);
 
 export default clerkMiddleware(async (auth, req) => {
-    const { isAuthenticated, redirectToSignIn } = await auth();
+    const { isAuthenticated, redirectToSignIn, sessionClaims } = await auth();
+    const role = (sessionClaims?.publicMetadata as { role?: string })?.role;
 
     // 1) Not logged in + trying to access dashboard => go to /login
     if (!isAuthenticated && isDashboardRoute(req)) {
@@ -17,7 +22,12 @@ export default clerkMiddleware(async (auth, req) => {
         return NextResponse.redirect(new URL('/dashboard', req.url));
     }
 
-    // 3) Everything else: allow
+    // 3) Admin-only protection
+    if (isAuthenticated && isAdminRoute(req) && role !== 'admin') {
+        return NextResponse.redirect(new URL('/dashboard', req.url));
+    }
+
+    // 4) Everything else: allow
     return NextResponse.next();
 });
 
