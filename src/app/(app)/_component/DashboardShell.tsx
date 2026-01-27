@@ -20,9 +20,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
                     <div className="h-14 lg:hidden" />
 
                     <div className="p-4 lg:p-6">
-                        <div className="rounded-lg border border-(--color-surface-muted) bg-(--color-background)">
-                            <div className="p-4 lg:p-6">{children}</div>
-                        </div>
+                        <div className="p-4 lg:p-6">{children}</div>
                     </div>
                 </main>
             </div>
