@@ -1,5 +1,7 @@
+import { ProfileContentPage } from "@/sections/dashboard/profile";
+
 export default function ProfilePage() {
     return (
-        <>hello Profile</>
+        <ProfileContentPage />
     )
 }
