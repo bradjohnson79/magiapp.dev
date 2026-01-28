@@ -1,5 +1,7 @@
+import { DashboardMainContentPage } from "@/sections/dashboard/main";
+
 export default function DashboardPage() {
     return (
-        <>hello dashboard</>
+        <DashboardMainContentPage />
     )
 }

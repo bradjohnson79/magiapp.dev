@@ -5,9 +5,11 @@ import Image from "next/image";
 export function MobileTopBar({
     initial,
     onOpenNav,
+    imageUrl,
     onOpenProfile,
 }: {
     initial: string;
+    imageUrl?: string | null,
     onOpenNav: () => void;
     onOpenProfile: () => void;
 }) {
@@ -33,7 +35,19 @@ export function MobileTopBar({
                 className="grid h-10 w-10 place-items-center rounded-full border border-(--color-surface-muted) bg-(--color-background) transition-colors hover:bg-(--color-surface-soft)"
                 aria-label="Open profile"
             >
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-(--color-soft-blue) text-xs font-bold text-(--color-foreground)">{initial}</span>
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-(--color-soft-blue) text-xs font-bold text-(--color-foreground)">
+                    {imageUrl ? (
+                        <Image
+                            src={imageUrl}
+                            alt=""
+                            width={36}
+                            height={36}
+                            className="h-full w-full object-cover rounded-full"
+                        />
+                    ) : (
+                        initial
+                    )}
+                </span>
             </Button>
         </div>
     );

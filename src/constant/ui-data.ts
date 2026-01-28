@@ -1,3 +1,5 @@
+import { QuickLinkItem } from "@/components/dashboard/DashboardQuickLinks";
+
 export const buildCards = [
   {
     key: 'web-apps',
@@ -434,4 +436,11 @@ export const TRIAL_DAYS_WORKS = [
     title: 'Decide when you are ready',
     description: 'Upgrade to unlock publishing and continue building.',
   },
+];
+
+export const QUICK_LINKS: QuickLinkItem[] = [
+  { label: 'Profile', href: '/dashboard/profile', icon: 'ion:person-outline', description: 'Manage your account details.' },
+  { label: 'Tokens', href: '/dashboard/tokens', icon: 'material-symbols:token-outline-rounded', description: 'View and regenerate auth tokens.' },
+  { label: 'Support', href: '/dashboard/support', icon: 'ix:support', description: 'Message our team.' },
+  { label: 'Settings', href: '/dashboard/settings', icon: 'ci:settings', description: 'Preferences and account options.' },
 ];

@@ -3,11 +3,13 @@
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export function SidebarProfileMenu({
     collapsed,
     userName,
     role,
+    imageUrl,
     initial,
     profileOpen,
     onToggle,
@@ -15,6 +17,7 @@ export function SidebarProfileMenu({
     profileRef,
 }: {
     collapsed: boolean;
+    imageUrl?: string | null;
     userName: string;
     role: string;
     initial: string;
@@ -24,7 +27,7 @@ export function SidebarProfileMenu({
     profileRef: React.RefObject<HTMLDivElement | null>;
 }) {
     return (
-        <div ref={profileRef} className={['relative', collapsed ? 'flex justify-center' : ''].join(' ')}>
+        <div ref={profileRef} className={['relative overflow-visible', collapsed ? 'flex justify-center' : ''].join(' ')}>
             <Button
                 type="button"
                 onClick={onToggle}
@@ -33,7 +36,17 @@ export function SidebarProfileMenu({
                 aria-label="Open profile menu"
             >
                 <span className="grid h-9 w-9 place-items-center rounded-full bg-(--color-soft-blue) text-xs font-bold text-(--color-foreground)">
-                    {initial}
+                    {imageUrl ? (
+                        <Image
+                            src={imageUrl}
+                            alt=""
+                            width={36}
+                            height={36}
+                            className="h-full w-full object-cover rounded-full"
+                        />
+                    ) : (
+                        initial
+                    )}
                 </span>
             </Button>
 
@@ -44,7 +57,7 @@ export function SidebarProfileMenu({
                     exit={{ opacity: 0, x: collapsed ? 6 : 0, y: 6, scale: 0.98 }}
                     transition={{ duration: 0.18, ease: 'easeOut' }}
                     className={[
-                        'absolute bottom-12 w-56 rounded-lg border border-(--color-surface-muted) bg-(--color-background) p-1.5 shadow-sm',
+                        'absolute z-50 bottom-12 w-56 rounded-lg border border-(--color-surface-muted) bg-(--color-background) p-1.5 shadow-sm',
                         collapsed ? 'left-full ml-2 translate-x-0' : 'left-0',
                     ].join(' ')}
                 >

@@ -34,6 +34,8 @@ export function SideBarMobile() {
     const userName = user?.fullName || user?.firstName || user?.username || user?.primaryEmailAddress?.emailAddress || 'User';
     const initial = (userName?.trim()?.[0] || 'U').toUpperCase();
 
+    const imageUrl = user?.hasImage ? user?.imageUrl : null
+
     const role =
         (user?.publicMetadata?.role as string) === 'admin'
             ? 'Admin'
@@ -64,6 +66,7 @@ export function SideBarMobile() {
         <>
             <MobileTopBar
                 initial={initial}
+                imageUrl={imageUrl}
                 onOpenNav={() => setOpenSheet('nav')}
                 onOpenProfile={() => setOpenSheet('profile')}
             />
@@ -78,7 +81,7 @@ export function SideBarMobile() {
 
             <div ref={profilePanelRef}>
                 <BottomSheet open={profileOpen} onClose={closeAll} ariaLabel="profile-sheet">
-                    <ProfileSheetContent userName={userName} role={role} initial={initial} onClose={closeAll} onLogout={onLogout} />
+                    <ProfileSheetContent userName={userName} role={role} initial={initial} onClose={closeAll} onLogout={onLogout} imageUrl={imageUrl} />
                 </BottomSheet>
             </div>
         </>

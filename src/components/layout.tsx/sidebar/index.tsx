@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useClerk, useUser } from '@clerk/nextjs';
+import { motion } from 'framer-motion';
 import { SidebarBrand } from './SidebarBrand';
 import { SidebarProfileMenu } from './SidebarProfileMenu';
 import { SidebarNavItem } from './SidebarNavItem';
@@ -50,6 +51,8 @@ export function SidebarDesktop() {
 
     const isUserLoaded = !!user;
 
+    const imageUrl = user?.hasImage ? user?.imageUrl : null
+
     const userName = isUserLoaded
         ? user?.fullName ||
         user?.firstName ||
@@ -68,52 +71,59 @@ export function SidebarDesktop() {
             : 'Member';
 
     return (
-        <aside
+        <motion.aside
+            initial={false}
+            animate={{ width: collapsed ? 64 : 288 }}
+            transition={{ duration: 0.22, ease: [0.2, 0.8, 0.2, 1] }}
             className={[
                 'sticky top-0 hidden h-screen shrink-0 border-r border-(--color-surface-muted) bg-(--color-background) lg:flex',
                 'bg-[url(/images/dashboard/sidebar-bg.png)] bg-cover bg-no-repeat bg-center',
-                collapsed ? 'w-16' : 'w-72',
             ].join(' ')}
         >
             <div className="flex h-full w-full flex-col p-3 z-10">
-                <SidebarBrand collapsed={collapsed} onClose={closeSidebar} onOpen={openSidebar} />
+                <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+                    <SidebarBrand collapsed={collapsed} onClose={closeSidebar} onOpen={openSidebar} />
 
-                {/* Nav */}
-                <div className="mt-4">
-                    {!collapsed ? (
-                        <p className="px-2 pb-2 text-xs font-semibold text-(--color-surface-darker)">Navigation</p>
-                    ) : null}
-                    <div className="flex flex-col gap-1">
-                        {sideNav
-                            .filter(
-                                (item) => !item.role || item.role === role.toLowerCase()
-                            )
-                            .map((item) => (
-                                <SidebarNavItem
-                                    key={item.href}
-                                    item={item}
-                                    active={pathname === item.href}
-                                    collapsed={collapsed}
-                                />
-                            ))}
+                    {/* Nav */}
+                    <div className="mt-4">
+                        {!collapsed ? (
+                            <p className="px-2 pb-2 text-xs font-semibold text-(--color-surface-darker)">Navigation</p>
+                        ) : null}
+                        <div className="flex flex-col gap-1">
+                            {sideNav
+                                .filter(
+                                    (item) => !item.role || item.role === role.toLowerCase()
+                                )
+                                .map((item) => (
+                                    <SidebarNavItem
+                                        key={item.href}
+                                        item={item}
+                                        active={pathname === item.href}
+                                        collapsed={collapsed}
+                                    />
+                                ))}
+                        </div>
                     </div>
+
+                    {/* Spacer */}
+                    <div className="flex-1" />
                 </div>
 
-                {/* Spacer */}
-                <div className="flex-1" />
-
-                <SidebarProfileMenu
-                    role={role}
-                    collapsed={collapsed}
-                    userName={userName}
-                    initial={initial}
-                    profileOpen={profileOpen}
-                    onToggle={() => setProfileOpen((v) => !v)}
-                    onLogout={onLogout}
-                    profileRef={profileRef}
-                />
+                <div className="mt-auto overflow-visible">
+                    <SidebarProfileMenu
+                        role={role}
+                        collapsed={collapsed}
+                        imageUrl={imageUrl}
+                        userName={userName}
+                        initial={initial}
+                        profileOpen={profileOpen}
+                        onToggle={() => setProfileOpen((v) => !v)}
+                        onLogout={onLogout}
+                        profileRef={profileRef}
+                    />
+                </div>
             </div>
-        </aside>
+        </motion.aside>
     );
 }
 
