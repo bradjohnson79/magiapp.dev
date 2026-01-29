@@ -13,6 +13,7 @@ type TextFieldProps = {
     onBlur?: () => void;
     error?: string;
     autoComplete?: string;
+    disabled: boolean;
 };
 
 export function TextField({
@@ -25,6 +26,7 @@ export function TextField({
     onBlur,
     error,
     autoComplete,
+    disabled = false,
 }: TextFieldProps) {
     const isPassword = type === 'password';
     const [showPassword, setShowPassword] = useState(false);
@@ -39,6 +41,7 @@ export function TextField({
                     type={isPassword ? (showPassword ? 'text' : 'password') : type}
                     placeholder={placeholder}
                     value={value}
+                    disabled={disabled}
                     autoComplete={autoComplete}
                     onChange={(e) => onChange(e.target.value)}
                     onBlur={onBlur}
@@ -46,7 +49,9 @@ export function TextField({
                         'h-10 w-full rounded-lg border bg-(--color-background) px-3 pr-10 text-sm text-(--color-foreground) outline-none',
                         'placeholder:text-surface-darker/70 transition-colors',
                         error ? 'border-red-500' : 'border-(--color-surface-muted)',
-                        'hover:border-(--color-foreground) focus:border-(--color-foreground)',
+                        disabled
+                            ? 'bg-(--color-surface-soft) text-(--color-surface-darker) border-(--color-surface-muted) cursor-not-allowed opacity-70 placeholder:text-surface-darker/50'
+                            : 'hover:border-(--color-foreground) focus:border-(--color-foreground)',
                     ].join(' ')}
                 />
 

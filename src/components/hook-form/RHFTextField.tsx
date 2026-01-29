@@ -9,9 +9,10 @@ type Props = {
     type?: string;
     placeholder?: string;
     autoComplete?: string;
+    disabled?: boolean
 };
 
-export function RHFTextField({ name, label, type = 'text', placeholder, autoComplete }: Props) {
+export function RHFTextField({ name, label, type = 'text', placeholder, autoComplete, disabled = false }: Props) {
     const { control } = useFormContext();
 
     return (
@@ -29,6 +30,7 @@ export function RHFTextField({ name, label, type = 'text', placeholder, autoComp
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                     error={fieldState.error?.message}
+                    disabled={disabled}
                 />
             )}
         />
