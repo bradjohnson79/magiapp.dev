@@ -42,3 +42,11 @@ export function getErrorMessage(errors: FieldErrors, name: string): string | und
 
     return undefined;
 }
+
+
+export type AppRole = "admin" | "member";
+
+export function getRoleFromUser(user: { publicMetadata?: unknown } | null | undefined): AppRole {
+    const role = (user?.publicMetadata as { role?: string } | undefined)?.role;
+    return role === "admin" ? "admin" : "member";
+}
