@@ -1,5 +1,6 @@
 'use client'
 
+import { Badge } from "@/components/ui/Badge";
 import { useBoolean } from "@/hooks/use-boolean";
 import { getUserName } from "@/lib/utils/help";
 import { useUser } from "@clerk/nextjs";
@@ -74,11 +75,21 @@ export function AvatarEdit() {
                 <input ref={inputRef} type="file" accept="image/*" onChange={onFileChange} className="hidden" />
             </div>
 
-            {/* Info */}
-            <div className="flex w-full flex-col items-start gap-2">
-                <p className="text-md lg:text-lg font-semibold text-(--color-foreground)">{userName}</p>
-                <p className="text-md lg:text-lg text-(--color-foreground)">{email}</p>
-                <p className="text-md lg:text-lg text-(--color-foreground)"><span className="font-semibold">Role:</span> <span className="text-(--color-surface-darker)">{role}</span></p>
+            <div className="flex w-full flex-col items-start justify-between h-full">
+                <div className="flex-col flex gap-2">
+                    <p className="text-md lg:text-lg font-semibold text-(--color-foreground)">
+                        {userName}
+                    </p>
+                    <span className="inline-flex max-w-full items-center rounded-md border border-(--color-surface-muted) bg-(--color-surface-soft) px-2.5 py-1 text-xs font-medium text-(--color-surface-darker)">
+                        {email}
+                    </span>
+                </div>
+                <div className="lg:mt-8 mt-2">
+                    <Badge
+                        label={role}
+                        variant={role === 'Admin' ? 'primary' : 'neutral'}
+                    />
+                </div>
             </div>
         </div>
     )
